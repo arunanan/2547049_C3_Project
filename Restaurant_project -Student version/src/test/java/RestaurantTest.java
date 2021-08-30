@@ -5,6 +5,8 @@ import org.mockito.Mockito;
 import org.mockito.Spy;
 
 import java.time.LocalTime;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -80,4 +82,20 @@ class RestaurantTest {
                 ()->restaurant.removeFromMenu("French fries"));
     }
     //<<<<<<<<<<<<<<<<<<<<<<<MENU>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+    @Test
+    public void calculate_total_order_value_when_items_from_the_menu_is_Selected(){
+        List<String> items = Arrays.asList("Sweet corn soup" , "Vegetable lasagne");
+
+
+        assertEquals(388, restaurant.calculateOrderValue(items));
+    }
+
+    @Test
+    public void throw_exception_when_item_that_does_not_exist_from_the_menu_is_selected_to_calculate_order_value() {
+        List<String> items = Arrays.asList("Sweet corn soup", "Vegetable lasagne", "veg burger");
+
+        assertThrows(itemNotFoundException.class, () -> restaurant.calculateOrderValue(items));
+
+    }
 }
