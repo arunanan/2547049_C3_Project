@@ -1,3 +1,4 @@
+import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -69,7 +70,29 @@ public class Restaurant {
     }
 
 
-    public int calculateOrderValue(List<String> items) {
-        return 0;
+    public int calculateOrderValue(List<String> items) throws itemNotFoundException {
+        int OrderValue = 0;
+
+        try{
+            for(String itemName : items){
+                OrderValue += getPriceforitem(itemName);
+            }
+        }
+        catch (itemNotFoundException e){
+            throw e;
+        }
+
+
+        return OrderValue;
+    }
+
+
+    public int getPriceforitem(String itemName) throws itemNotFoundException {
+        for(Item item : menu){
+            if(item.getName().equals(itemName)){
+                return item.getPrice();
+            }
+        }
+        throw new itemNotFoundException(itemName);
     }
 }

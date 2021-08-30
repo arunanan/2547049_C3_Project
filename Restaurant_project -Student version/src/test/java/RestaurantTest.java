@@ -23,6 +23,9 @@ class RestaurantTest {
         restaurant =new Restaurant("Amelie's cafe","Chennai",openingTime,closingTime);
         restaurant.addToMenu("Sweet corn soup",119);
         restaurant.addToMenu("Vegetable lasagne", 269);
+        restaurant.addToMenu("Vegetable burger", 150);
+        restaurant.addToMenu("Vegetable pizza", 200);
+
 
     }
 
@@ -84,18 +87,21 @@ class RestaurantTest {
     //<<<<<<<<<<<<<<<<<<<<<<<MENU>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
     @Test
-    public void calculate_total_order_value_when_items_from_the_menu_is_Selected(){
-        List<String> items = Arrays.asList("Sweet corn soup" , "Vegetable lasagne");
+    public void calculate_total_order_value_when_items_from_the_menu_is_Selected() throws itemNotFoundException {
+        List<String> items1 = Arrays.asList("Sweet corn soup" , "Vegetable lasagne");
+        List<String> items2 = Arrays.asList("Sweet corn soup" , "Vegetable lasagne", "Vegetable pizza" , "Vegetable burger");
 
 
-        assertEquals(388, restaurant.calculateOrderValue(items));
+        assertEquals(388, restaurant.calculateOrderValue(items1));
+        assertEquals(738, restaurant.calculateOrderValue(items2));
     }
 
     @Test
     public void throw_exception_when_item_that_does_not_exist_from_the_menu_is_selected_to_calculate_order_value() {
-        List<String> items = Arrays.asList("Sweet corn soup", "Vegetable lasagne", "veg burger");
-
-        assertThrows(itemNotFoundException.class, () -> restaurant.calculateOrderValue(items));
+        List<String> items1 = Arrays.asList("Sweet corn soup", "biriyani");
+        List<String> items2 = Arrays.asList("Sweet corn soup" , "Vegetable lasagne", "Vegetable pizza" , "Full meals");
+        assertThrows(itemNotFoundException.class, () -> restaurant.calculateOrderValue(items1));
+        assertThrows(itemNotFoundException.class, () -> restaurant.calculateOrderValue(items2));
 
     }
 }
